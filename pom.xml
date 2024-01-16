@@ -238,6 +238,9 @@
                                     ${maven.multiModuleProjectDirectory}/buildingtools/src/main/resources/header.txt
                                 </header>
                                 <excludes>
+                                    <exclude>**/Cargo.lock</exclude>
+                                    <exclude>build.metadata</exclude>
+                                    <exclude>.snyk</exclude>
                                     <exclude>release.properties</exclude>
                                     <exclude>**/pom.xml.tag</exclude>
                                     <exclude>**/pom.xml.releaseBackup</exclude>
