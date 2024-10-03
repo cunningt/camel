@@ -35,6 +35,9 @@
         <!-- use by camel-catalog -->
         <firstVersion>2.15.0</firstVersion>
         <label>tooling</label>
+
+        <!-- Do not execute prepare-catalog when camel-prod-excludes is skipped. Otherwise the catalog would be incomplete -->
+        <camel.prepare-catalog.skip>${cq.camel-prod-excludes.skip}</camel.prepare-catalog.skip>
     </properties>
 
     <dependencies>

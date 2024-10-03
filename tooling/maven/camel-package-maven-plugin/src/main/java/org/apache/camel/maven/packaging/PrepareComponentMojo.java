@@ -277,11 +277,11 @@ public class PrepareComponentMojo extends AbstractGeneratorMojo {
             Matcher matcher = pattern.matcher(between);
             TreeSet<MavenGav> dependencies = new TreeSet<>();
             while (matcher.find()) {
-                MavenGav gav = new MavenGav(matcher.group(1), matcher.group(2), "${project.version}", null);
+                MavenGav gav = new MavenGav(matcher.group(1), matcher.group(2), null, null);
                 dependencies.add(gav);
             }
             // add ourselves
-            dependencies.add(new MavenGav(project.getGroupId(), project.getArtifactId(), "${project.version}", null));
+            dependencies.add(new MavenGav(project.getGroupId(), project.getArtifactId(), null, null));
 
             // generate string output of all dependencies
             String s = dependencies.stream()
@@ -349,7 +349,9 @@ public class PrepareComponentMojo extends AbstractGeneratorMojo {
             sb.append(pad).append("<dependency>\n");
             sb.append(pad).append("    <groupId>").append(groupId).append("</groupId>\n");
             sb.append(pad).append("    <artifactId>").append(artifactId).append("</artifactId>\n");
-            sb.append(pad).append("    <version>").append(version).append("</version>\n");
+            if (version != null) {
+                sb.append(pad).append("    <version>").append(version).append("</version>\n");
+            }
             if (type != null) {
                 sb.append(pad).append("    <type>").append(type).append("</type>\n");
             }
@@ -363,7 +365,7 @@ public class PrepareComponentMojo extends AbstractGeneratorMojo {
             if (n == 0) {
                 n = artifactId.compareTo(o.artifactId);
             }
-            if (n == 0) {
+            if ((n == 0) && (version != null) && (o.version != null)) {
                 n = version.compareTo(o.version);
             }
             return n;

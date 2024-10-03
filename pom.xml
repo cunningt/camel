@@ -108,6 +108,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+        <camel-community-version>4.10.0</camel-community-version>
+        <cq-plugin-version>4.16.2</cq-plugin-version>
+
         <site-repo-url>scpexe://people.apache.org/www/camel.apache.org/maven/</site-repo-url>
         <jdk.version>17</jdk.version>
         <!-- These two are here only to prevent the versions for the Apache parent pom from leaking-->
@@ -159,6 +162,40 @@
         <defaultGoal>install</defaultGoal>
 
         <plugins>
+            <plugin>
+                <groupId>org.l2x6.cq</groupId>
+                <artifactId>cq-camel-prod-maven-plugin</artifactId>
+                <version>${cq-plugin-version}</version>
+                <configuration>
+                    <requiredProductizedCamelArtifacts>${maven.multiModuleProjectDirectory}/product/src/main/resources/required-productized-camel-artifacts.txt</requiredProductizedCamelArtifacts>
+                    <simpleElementWhitespace>SPACE</simpleElementWhitespace>
+                    <additionalProductizedArtifactIds>
+                        <additionalProductizedArtifactId>camel</additionalProductizedArtifactId>
+                        <additionalProductizedArtifactId>camel-bom</additionalProductizedArtifactId>
+                        <additionalProductizedArtifactId>camel-core</additionalProductizedArtifactId>
+                        <additionalProductizedArtifactId>camel-dependencies</additionalProductizedArtifactId>
+                        <additionalProductizedArtifactId>camel-parent</additionalProductizedArtifactId>
+                    </additionalProductizedArtifactIds>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.camel</groupId>
+                        <artifactId>camel-package-maven-plugin</artifactId>
+                        <version>${camel-community-version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.google.guava</groupId>
+                        <artifactId>guava</artifactId>
+                        <version>32.1.1-jre</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>com.google.code.findbugs</groupId>
+                                <artifactId>jsr305</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -226,6 +263,20 @@
 
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.l2x6.cq</groupId>
+                    <artifactId>cq-camel-prod-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>check-excludes</id>
+                            <phase>validate</phase>
+                            <inherited>false</inherited>
+                            <goals>
+                                <goal>camel-prod-excludes-check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
                 <plugin>
                     <groupId>com.mycila</groupId>
                     <artifactId>license-maven-plugin</artifactId>
