@@ -178,6 +178,7 @@ public class SyncPropertiesMojo extends AbstractMojo {
             List invalidProperties = Stream.concat(camelParentPomXmlModel.getProperties().entrySet().stream(),
                     camelPomXmlModel.getProperties().entrySet().stream()
                             .filter(property -> !(property.getKey().equals("jdk.version"))))
+                    .filter(property -> !(property.getKey().equals("camel-community.version")))
                     .filter(property -> invalids.test((String) property.getKey()) && !excludes.test((String) property.getKey()))
                     .map(property -> property.getKey())
                     .sorted()
