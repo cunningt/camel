@@ -1,0 +1,14 @@
+{
+  "other": {
+    "kind": "other",
+    "name": "jbang-app",
+    "title": "Jbang App",
+    "description": "Fat JAR spring boot executable for camel-jbang",
+    "deprecated": false,
+    "firstVersion": "4.10.0",
+    "supportLevel": "Preview",
+    "groupId": "org.apache.camel",
+    "artifactId": "camel-jbang-app",
+    "version": "4.10.0-SNAPSHOT"
+  }
+}
