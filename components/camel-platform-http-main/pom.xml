@@ -65,7 +65,7 @@
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-auth-jwt</artifactId>
-            <version>${vertx-version}</version>
+            <version>${vertx-community-version}</version>
         </dependency>
 
         <!-- test dependencies -->
