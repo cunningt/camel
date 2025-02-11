@@ -37,17 +37,17 @@
         <!-- sync so all components are built first -->
         <module>camel-allcomponents</module>
         <!-- dummy used for testing catalog -->
-        <module>dummy-component</module>
+        <!-- <module>dummy-component</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <!-- catalog -->
         <module>camel-catalog</module>
         <module>camel-catalog-console</module>
         <module>camel-catalog-lucene</module>
-        <module>camel-catalog-maven</module>
+        <!-- <module>camel-catalog-maven</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <!-- tooling that depends on catalog -->
-        <module>camel-route-parser</module>
-        <module>camel-csimple-maven-plugin</module>
-        <module>camel-report-maven-plugin</module>
-        <module>camel-catalog-common</module>
+        <!-- <module>camel-route-parser</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-csimple-maven-plugin</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-report-maven-plugin</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-catalog-common</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
     </modules>
 
 </project>

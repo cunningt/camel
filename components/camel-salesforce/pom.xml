@@ -34,8 +34,8 @@
 
     <modules>
         <module>camel-salesforce-component</module>
-        <module>camel-salesforce-codegen</module>
-        <module>camel-salesforce-maven-plugin</module>
+        <!-- <module>camel-salesforce-codegen</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-salesforce-maven-plugin</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
     </modules>
     
     <properties>

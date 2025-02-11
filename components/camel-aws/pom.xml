@@ -39,33 +39,33 @@
     </properties>
 
     <modules>
-        <module>camel-aws2-athena</module>
-        <module>camel-aws-bedrock</module>
-        <module>camel-aws-cloudtrail</module>
-        <module>camel-aws-config</module>
+        <!-- <module>camel-aws2-athena</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-aws-bedrock</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-aws-cloudtrail</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-aws-config</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <module>camel-aws2-cw</module>
         <module>camel-aws2-ddb</module>
-        <module>camel-aws2-ec2</module>
-        <module>camel-aws2-ecs</module>
-        <module>camel-aws2-eks</module>
-        <module>camel-aws2-eventbridge</module>
-        <module>camel-aws2-iam</module>
+        <!-- <module>camel-aws2-ec2</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-aws2-ecs</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-aws2-eks</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-aws2-eventbridge</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-aws2-iam</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <module>camel-aws2-kinesis</module>
-        <module>camel-aws2-kms</module>
+        <!-- <module>camel-aws2-kms</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <module>camel-aws2-lambda</module>
-        <module>camel-aws2-msk</module>
-        <module>camel-aws2-mq</module>
-        <module>camel-aws2-redshift</module>
+        <!-- <module>camel-aws2-msk</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-aws2-mq</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-aws2-redshift</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <module>camel-aws2-s3</module>
         <module>camel-aws-secrets-manager</module>
-        <module>camel-aws2-ses</module>
+        <!-- <module>camel-aws2-ses</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <module>camel-aws2-sns</module>
         <module>camel-aws2-sqs</module>
-        <module>camel-aws2-step-functions</module>
-        <module>camel-aws2-sts</module>
-        <module>camel-aws2-timestream</module>
-        <module>camel-aws2-translate</module>
-        <module>camel-aws-xray</module>
+        <!-- <module>camel-aws2-step-functions</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-aws2-sts</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-aws2-timestream</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-aws2-translate</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-aws-xray</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
     </modules>
 
 </project>

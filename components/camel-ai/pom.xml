@@ -33,21 +33,21 @@
     <description>Camel AI parent</description>
 
     <modules>
-        <module>camel-chatscript</module>
+        <!-- <module>camel-chatscript</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <module>camel-djl</module>
-        <module>camel-kserve</module>
-        <module>camel-langchain4j-chat</module>
-        <module>camel-langchain4j-core</module>
-        <module>camel-langchain4j-embeddings</module>
-        <module>camel-langchain4j-tokenizer</module>
-        <module>camel-langchain4j-tools</module>
-        <module>camel-langchain4j-web-search</module>
-        <module>camel-milvus</module>
-        <module>camel-neo4j</module>
-        <module>camel-pinecone</module>
-        <module>camel-qdrant</module>
-        <module>camel-tensorflow-serving</module>
-        <module>camel-torchserve</module>
+        <!-- <module>camel-kserve</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-langchain4j-chat</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-langchain4j-core</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-langchain4j-embeddings</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-langchain4j-tokenizer</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-langchain4j-tools</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-langchain4j-web-search</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-milvus</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-neo4j</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-pinecone</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-qdrant</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-tensorflow-serving</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-torchserve</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
     </modules>
 
 </project>

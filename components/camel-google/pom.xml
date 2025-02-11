@@ -34,15 +34,15 @@
 
     <modules>
         <module>camel-google-bigquery</module>
-        <module>camel-google-calendar</module>
-        <module>camel-google-drive</module>
-        <module>camel-google-functions</module>
-        <module>camel-google-mail</module>
+        <!-- <module>camel-google-calendar</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-google-drive</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-google-functions</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-google-mail</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <module>camel-google-pubsub</module>
-        <module>camel-google-pubsub-lite</module>
+        <!-- <module>camel-google-pubsub-lite</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <module>camel-google-secret-manager</module>
-        <module>camel-google-sheets</module>
-        <module>camel-google-storage</module>
+        <!-- <module>camel-google-sheets</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-google-storage</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
     </modules>
 
 </project>

@@ -280,11 +280,11 @@
                                 </goals>
                                 <configuration>
                                     <scripts>
-                                        <script><![CDATA[
+                                        <script>
                       session.userProperties['version'] = project.version
                       session.userProperties['groupId'] = 'org.apache.camel'
                       session.userProperties['artifactId'] = 'olingo2-my-car-service'
-                      ]]></script>
+                      </script>
                                     </scripts>
                                 </configuration>
                             </execution>

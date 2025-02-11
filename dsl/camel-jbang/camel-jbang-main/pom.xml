@@ -72,10 +72,10 @@
                             <target>
                                 <copy todir="${dist.dir}">
                                     <fileset dir="${project.build.directory}">
-                                        <include name="**/*.java" />
+                                        <include name="**/*.java"/>
                                     </fileset>
                                 </copy>
-                                <chmod file="${dist.dir}/*.java" perm="u+x" />
+                                <chmod file="${dist.dir}/*.java" perm="u+x"/>
                             </target>
                         </configuration>
                         <goals>

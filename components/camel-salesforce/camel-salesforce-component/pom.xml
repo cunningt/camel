@@ -298,8 +298,8 @@
                         <phase>process-sources</phase>
                         <configuration>
                             <target>
-                                <replace token="@javax.annotation.Generated" value="@jakarta.annotation.Generated" dir="target/generated-sources/protobuf">
-                                    <include name="**/*.java" />
+                                <replace dir="target/generated-sources/protobuf" token="@javax.annotation.Generated" value="@jakarta.annotation.Generated">
+                                    <include name="**/*.java"/>
                                 </replace>
                             </target>
                         </configuration>
@@ -336,7 +336,7 @@
                                                     ${salesforce.component.root}/it/resources/migration-tool/ant-salesforce.jar
                                                 </file>
                                             </files>
-                                            <message><![CDATA[Salesforce Migration Tool required
+                                            <message>Salesforce Migration Tool required
 
 You need to download the Salesforce Migration Tool (ZIP file) and
 extract the `ant-salesforce.jar` out of it to:
@@ -354,7 +354,7 @@ To see what will be done.
 
 For information and download of the Salesforce Migration Tool consult:
 
-https://developer.salesforce.com/page/Force.com_Migration_Tool]]></message>
+https://developer.salesforce.com/page/Force.com_Migration_Tool</message>
                                         </requireFilesExist>
                                     </rules>
                                     <fail>true</fail>
@@ -422,29 +422,29 @@ https://developer.salesforce.com/page/Force.com_Migration_Tool]]></message>
                                     <target xmlns:if="ant:if" xmlns:unless="ant:unless">
                                         <taskdef resource="com/salesforce/antlib.xml" uri="antlib:com.salesforce">
                                             <classpath>
-                                                <pathelement location="${salesforce.component.root}/it/resources/migration-tool/ant-salesforce.jar" />
+                                                <pathelement location="${salesforce.component.root}/it/resources/migration-tool/ant-salesforce.jar"/>
                                             </classpath>
                                         </taskdef>
 
-                                        <property prefix="prop" file="${project.build.directory}/test-classes/test-salesforce-login.properties" />
-                                        <property environment="env" />
+                                        <property file="${project.build.directory}/test-classes/test-salesforce-login.properties" prefix="prop"/>
+                                        <property environment="env"/>
 
-                                        <property name="username" value="${prop.salesforce.username}" if:set="prop.salesforce.username" />
-                                        <property name="username" value="${env.SALESFORCE_USERNAME}" if:set="env.SALESFORCE_USERNAME" />
+                                        <property if:set="prop.salesforce.username" name="username" value="${prop.salesforce.username}"/>
+                                        <property if:set="env.SALESFORCE_USERNAME" name="username" value="${env.SALESFORCE_USERNAME}"/>
 
-                                        <property name="password" value="${prop.salesforce.password}" if:set="prop.salesforce.password" />
-                                        <property name="password" value="${env.SALESFORCE_PASSWORD}" if:set="env.SALESFORCE_PASSWORD" />
+                                        <property if:set="prop.salesforce.password" name="password" value="${prop.salesforce.password}"/>
+                                        <property if:set="env.SALESFORCE_PASSWORD" name="password" value="${env.SALESFORCE_PASSWORD}"/>
 
-                                        <property name="serverurl" value="${prop.salesforce.login.url}" if:set="prop.salesforce.login.url" />
-                                        <property name="serverurl" value="${env.SALESFORCE_LOGIN_URL}" if:set="env.SALESFORCE_LOGIN_URL" />
+                                        <property if:set="prop.salesforce.login.url" name="serverurl" value="${prop.salesforce.login.url}"/>
+                                        <property if:set="env.SALESFORCE_LOGIN_URL" name="serverurl" value="${env.SALESFORCE_LOGIN_URL}"/>
 
-                                        <fail unless:set="username" message="To run the migrations you need to specify either `salesforce.username` in: ${project.build.directory}/generated-resources/test-salesforce-login.properties or set SALESFORCE_USERNAME environment variable" />
+                                        <fail message="To run the migrations you need to specify either `salesforce.username` in: ${project.build.directory}/generated-resources/test-salesforce-login.properties or set SALESFORCE_USERNAME environment variable" unless:set="username"/>
 
-                                        <fail unless:set="password" message="To run the migrations you need to specify either `salesforce.password` in: ${project.build.directory}/generated-resources/test-salesforce-login.properties or set SALESFORCE_PASSWORD environment variable" />
+                                        <fail message="To run the migrations you need to specify either `salesforce.password` in: ${project.build.directory}/generated-resources/test-salesforce-login.properties or set SALESFORCE_PASSWORD environment variable" unless:set="password"/>
 
-                                        <fail unless:set="serverurl" message="To run the migrations you need to specify either `salesforce.login.url` in: ${project.build.directory}/generated-resources/test-salesforce-login.properties or set SALESFORCE_LOGIN_URL environment variable" />
+                                        <fail message="To run the migrations you need to specify either `salesforce.login.url` in: ${project.build.directory}/generated-resources/test-salesforce-login.properties or set SALESFORCE_LOGIN_URL environment variable" unless:set="serverurl"/>
 
-                                        <sf:deploy xmlns:sf="antlib:com.salesforce" username="${username}" password="${password}" deployRoot="${salesforce.component.root}/it/resources/salesforce" rollbackOnError="true" serverurl="${serverurl}" />
+                                        <sf:deploy xmlns:sf="antlib:com.salesforce" deployRoot="${salesforce.component.root}/it/resources/salesforce" password="${password}" rollbackOnError="true" serverurl="${serverurl}" username="${username}"/>
                                     </target>
                                 </configuration>
                             </execution>

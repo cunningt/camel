@@ -47,11 +47,11 @@
         <module>camel-endpointdsl-support</module>
         <module>camel-java-joor-dsl</module>
         <module>camel-xml-io-dsl</module>
-        <module>camel-xml-jaxb-dsl</module>
-        <module>camel-xml-jaxb-dsl-test</module>
+        <!-- <module>camel-xml-jaxb-dsl</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>camel-xml-jaxb-dsl-test</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <module>camel-yaml-dsl</module>
         <module>camel-kamelet-main</module>
-        <module>camel-jbang</module>
+        <!-- <module>camel-jbang</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
     </modules>
 
     <build>

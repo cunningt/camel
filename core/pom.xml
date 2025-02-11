@@ -60,7 +60,7 @@
         <module>camel-health</module>
         <module>camel-console</module>
         <module>camel-main</module>
-        <module>camel-core-all</module>
+        <!-- <module>camel-core-all</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
     </modules>
 
     <properties>

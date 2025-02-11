@@ -111,7 +111,7 @@
                                 <phase>pre-integration-test</phase>
                                 <configuration>
                                     <target>
-                                        <mkdir dir="target/tmp-repo" />
+                                        <mkdir dir="target/tmp-repo"/>
                                     </target>
                                 </configuration>
                                 <goals>

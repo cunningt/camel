@@ -35,13 +35,13 @@
 
     <modules>
         <module>camel-package-maven-plugin</module>
-        <module>camel-maven-plugin</module>
+        <!-- <module>camel-maven-plugin</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <module>camel-eip-documentation-enricher-maven-plugin</module>
         <module>camel-api-component-maven-plugin</module>
         <module>bom-generator-maven-plugin</module>
-        <module>camel-restdsl-openapi-plugin</module>
+        <!-- <module>camel-restdsl-openapi-plugin</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <module>sync-properties-maven-plugin</module>
-        <module>camel-component-maven-plugin</module>
+        <!-- <module>camel-component-maven-plugin</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
     </modules>
 
     <!-- Apply to children. -->

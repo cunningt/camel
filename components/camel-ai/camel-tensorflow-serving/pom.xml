@@ -150,8 +150,8 @@
                         <phase>process-sources</phase>
                         <configuration>
                             <target>
-                                <replace token="@javax.annotation.Generated" value="@jakarta.annotation.Generated" dir="target/generated-sources/protobuf">
-                                    <include name="**/*.java" />
+                                <replace dir="target/generated-sources/protobuf" token="@javax.annotation.Generated" value="@jakarta.annotation.Generated">
+                                    <include name="**/*.java"/>
                                 </replace>
                             </target>
                         </configuration>

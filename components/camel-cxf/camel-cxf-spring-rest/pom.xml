@@ -275,14 +275,14 @@
                         <configuration>
                             <target>
                                 <echo>Copying spring meta files</echo>
-                                <copy todir="${project.build.directory}/spring-meta" preservelastmodified="true">
+                                <copy preservelastmodified="true" todir="${project.build.directory}/spring-meta">
                                     <fileset dir="${project.basedir}/src/main/resources">
-                                        <include name="**/spring.*" />
+                                        <include name="**/spring.*"/>
                                     </fileset>
                                 </copy>
-                                <replace file="${project.build.directory}/spring-meta/META-INF/spring.schemas" token="$${camel.version}" value="${project.version}" preservelastmodified="true" />
-                                <copy todir="${project.build.directory}/classes" preservelastmodified="true">
-                                    <fileset dir="${project.build.directory}/spring-meta" />
+                                <replace file="${project.build.directory}/spring-meta/META-INF/spring.schemas" preservelastmodified="true" token="$${camel.version}" value="${project.version}"/>
+                                <copy preservelastmodified="true" todir="${project.build.directory}/classes">
+                                    <fileset dir="${project.build.directory}/spring-meta"/>
                                 </copy>
                             </target>
                         </configuration>

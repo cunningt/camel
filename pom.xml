@@ -69,20 +69,20 @@
 
     <modules>
         <module>parent</module>
-        <module>etc</module>
+        <!-- <module>etc</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <module>bom</module>
-        <module>buildingtools</module>
+        <!-- <module>buildingtools</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <module>tooling</module>
         <module>core</module>
-        <module>test-infra</module>
+        <!-- <module>test-infra</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
         <module>components</module>
         <module>catalog</module>
         <module>camel-dependencies</module>
         <module>dsl</module>
-        <module>archetypes</module>
-        <module>tests</module>
-        <module>docs</module>
-        <module>apache-camel</module>
+        <!-- <module>archetypes</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>tests</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>docs</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
+        <!-- <module>apache-camel</module> disabled by cq-prod-maven-plugin:camel-prod-excludes -->
     </modules>
 
     <scm>
