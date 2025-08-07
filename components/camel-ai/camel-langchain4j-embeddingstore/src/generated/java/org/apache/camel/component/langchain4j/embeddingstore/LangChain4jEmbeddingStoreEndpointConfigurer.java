@@ -30,6 +30,8 @@ public class LangChain4jEmbeddingStoreEndpointConfigurer extends PropertyConfigu
         case "collectionDimension": target.getConfiguration().setCollectionDimension(property(camelContext, java.lang.Integer.class, value)); return true;
         case "collectionsimilaritymetric":
         case "collectionSimilarityMetric": target.getConfiguration().setCollectionSimilarityMetric(property(camelContext, java.lang.String.class, value)); return true;
+        case "embeddingstore":
+        case "embeddingStore": target.setEmbeddingStore(property(camelContext, dev.langchain4j.store.embedding.EmbeddingStore.class, value)); return true;
         case "host": target.getConfiguration().setHost(property(camelContext, java.lang.String.class, value)); return true;
         case "indexname":
         case "indexName": target.getConfiguration().setIndexName(property(camelContext, java.lang.String.class, value)); return true;
@@ -46,6 +48,11 @@ public class LangChain4jEmbeddingStoreEndpointConfigurer extends PropertyConfigu
     }
 
     @Override
+    public String[] getAutowiredNames() {
+        return new String[]{"embeddingStore"};
+    }
+
+    @Override
     public Class<?> getOptionType(String name, boolean ignoreCase) {
         switch (ignoreCase ? name.toLowerCase() : name) {
         case "cloud": return java.lang.String.class;
@@ -55,6 +62,8 @@ public class LangChain4jEmbeddingStoreEndpointConfigurer extends PropertyConfigu
         case "collectionDimension": return java.lang.Integer.class;
         case "collectionsimilaritymetric":
         case "collectionSimilarityMetric": return java.lang.String.class;
+        case "embeddingstore":
+        case "embeddingStore": return dev.langchain4j.store.embedding.EmbeddingStore.class;
         case "host": return java.lang.String.class;
         case "indexname":
         case "indexName": return java.lang.String.class;
@@ -81,6 +90,8 @@ public class LangChain4jEmbeddingStoreEndpointConfigurer extends PropertyConfigu
         case "collectionDimension": return target.getConfiguration().getCollectionDimension();
         case "collectionsimilaritymetric":
         case "collectionSimilarityMetric": return target.getConfiguration().getCollectionSimilarityMetric();
+        case "embeddingstore":
+        case "embeddingStore": return target.getEmbeddingStore();
         case "host": return target.getConfiguration().getHost();
         case "indexname":
         case "indexName": return target.getConfiguration().getIndexName();

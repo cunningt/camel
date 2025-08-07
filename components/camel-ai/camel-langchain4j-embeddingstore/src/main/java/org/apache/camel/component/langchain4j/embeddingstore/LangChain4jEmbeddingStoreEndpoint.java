@@ -16,23 +16,17 @@
  */
 package org.apache.camel.component.langchain4j.embeddingstore;
 
-import java.util.HashMap;
-
+import dev.langchain4j.store.embedding.EmbeddingStore;
 import org.apache.camel.Category;
 import org.apache.camel.Component;
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
-import org.apache.camel.spi.BeanIntrospection;
 import org.apache.camel.spi.Metadata;
 import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.spi.UriParam;
 import org.apache.camel.spi.UriPath;
 import org.apache.camel.support.DefaultEndpoint;
-import org.apache.camel.support.PluginHelper;
-import org.apache.camel.util.UnwrapHelper;
-
-import dev.langchain4j.store.embedding.EmbeddingStore;
 
 /**
  * Perform operations on the Langchain4jEmbeddingStores.
@@ -85,9 +79,9 @@ public class LangChain4jEmbeddingStoreEndpoint extends DefaultEndpoint {
     }
 
     /**
-     * Sets the DataSource to use to communicate with the database.
+     * Sets the EmbedddingStore to use to communicate with the database.
      */
-    public void setEmbeddingsStore(EmbeddingStore embdeddingStore) {
+    public void setEmbeddingStore(EmbeddingStore embdeddingStore) {
         this.embeddingStore = embeddingStore;
     }
 

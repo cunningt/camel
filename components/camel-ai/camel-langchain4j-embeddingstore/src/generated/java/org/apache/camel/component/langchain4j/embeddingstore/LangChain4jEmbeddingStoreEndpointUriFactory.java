@@ -23,11 +23,12 @@ public class LangChain4jEmbeddingStoreEndpointUriFactory extends org.apache.came
     private static final Set<String> SECRET_PROPERTY_NAMES;
     private static final Set<String> MULTI_VALUE_PREFIXES;
     static {
-        Set<String> props = new HashSet<>(12);
+        Set<String> props = new HashSet<>(13);
         props.add("cloud");
         props.add("cloudRegion");
         props.add("collectionDimension");
         props.add("collectionSimilarityMetric");
+        props.add("embeddingStore");
         props.add("embeddingStoreName");
         props.add("host");
         props.add("indexName");
