@@ -63,7 +63,7 @@ public class LangChain4jEmbeddingStoreComponent extends DefaultComponent {
 
         LangChain4jEmbeddingStoreConfiguration configuration = this.configuration.copy();
 
-        LangChain4jEmbeddingStoreEndpoint endpoint = new LangChain4jEmbeddingStoreEndpoint(uri, this);
+        LangChain4jEmbeddingStoreEndpoint endpoint = new LangChain4jEmbeddingStoreEndpoint(uri, this, remaining, configuration);
         setProperties(endpoint, parameters);
 
         return endpoint;

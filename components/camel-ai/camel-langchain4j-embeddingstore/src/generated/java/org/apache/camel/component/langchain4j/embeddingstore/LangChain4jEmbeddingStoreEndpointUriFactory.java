@@ -17,30 +17,18 @@ import org.apache.camel.spi.EndpointUriFactory;
 @Generated("org.apache.camel.maven.packaging.GenerateEndpointUriFactoryMojo")
 public class LangChain4jEmbeddingStoreEndpointUriFactory extends org.apache.camel.support.component.EndpointUriFactorySupport implements EndpointUriFactory {
 
-    private static final String BASE = ":null";
+    private static final String BASE = ":embeddingStoreId";
 
     private static final Set<String> PROPERTY_NAMES;
     private static final Set<String> SECRET_PROPERTY_NAMES;
     private static final Set<String> MULTI_VALUE_PREFIXES;
     static {
-        Set<String> props = new HashSet<>(13);
-        props.add("cloud");
-        props.add("cloudRegion");
-        props.add("collectionDimension");
-        props.add("collectionSimilarityMetric");
+        Set<String> props = new HashSet<>(3);
         props.add("embeddingStore");
-        props.add("embeddingStoreName");
-        props.add("host");
-        props.add("indexName");
+        props.add("embeddingStoreId");
         props.add("lazyStartProducer");
-        props.add("proxyHost");
-        props.add("proxyPort");
-        props.add("tls");
-        props.add("token");
         PROPERTY_NAMES = Collections.unmodifiableSet(props);
-        Set<String> secretProps = new HashSet<>(1);
-        secretProps.add("token");
-        SECRET_PROPERTY_NAMES = Collections.unmodifiableSet(secretProps);
+        SECRET_PROPERTY_NAMES = Collections.emptySet();
         MULTI_VALUE_PREFIXES = Collections.emptySet();
     }
 
@@ -56,7 +44,7 @@ public class LangChain4jEmbeddingStoreEndpointUriFactory extends org.apache.came
 
         Map<String, Object> copy = new HashMap<>(properties);
 
-        uri = buildPathParameter(syntax, uri, "embeddingStoreName", null, true, copy);
+        uri = buildPathParameter(syntax, uri, "embeddingStoreId", null, true, copy);
         uri = buildQueryParameters(uri, copy, encode);
         return uri;
     }

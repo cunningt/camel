@@ -16,7 +16,6 @@
  */
 package org.apache.camel.component.langchain4j.embeddingstore;
 
-import dev.langchain4j.store.embedding.EmbeddingStore;
 import org.apache.camel.Category;
 import org.apache.camel.Component;
 import org.apache.camel.Consumer;
@@ -35,7 +34,7 @@ import org.apache.camel.support.DefaultEndpoint;
              firstVersion = "4.14.0",
              scheme = LangChain4jEmbeddingStore.SCHEME,
              title = "LangChain4j Embedding Store",
-             syntax = "langchain4j-embeddings",
+             syntax = "langchain4j-embeddings:embeddingStoreId",
              producerOnly = true,
              category = {
                      Category.DATABASE,
@@ -44,24 +43,26 @@ import org.apache.camel.support.DefaultEndpoint;
              headersClass = LangChain4jEmbeddingStore.Headers.class)
 public class LangChain4jEmbeddingStoreEndpoint extends DefaultEndpoint {
     @Metadata(required = true)
-    @UriPath(description = "Embedding Store Name")
-    String embeddingStoreName;
-
-    @Metadata(autowired = true)
-    @UriParam(description = "Sets the EmbeddingStore to use to communicate with the vector database at endpoint level.")
-    private EmbeddingStore embeddingStore;
+    @UriPath(description = "The id of the embedding store")
+    private final String embeddingStoreId;
 
     @UriParam
     private LangChain4jEmbeddingStoreConfiguration configuration;
 
-    public LangChain4jEmbeddingStoreEndpoint(String endpointUri,
-                                             Component component) {
+    public LangChain4jEmbeddingStoreEndpoint(String endpointUri, Component component, String embeddingStoreId,
+                                             LangChain4jEmbeddingStoreConfiguration configuration) {
 
         super(endpointUri, component);
+        this.embeddingStoreId = embeddingStoreId;
+        this.configuration = configuration;
     }
 
     public LangChain4jEmbeddingStoreConfiguration getConfiguration() {
         return configuration;
+    }
+
+    public String getEmbeddingId() {
+        return this.embeddingStoreId;
     }
 
     @Override
@@ -72,17 +73,6 @@ public class LangChain4jEmbeddingStoreEndpoint extends DefaultEndpoint {
     @Override
     public Consumer createConsumer(Processor processor) throws Exception {
         throw new UnsupportedOperationException("Consumer is not implemented for this component");
-    }
-
-    public EmbeddingStore getEmbeddingStore() {
-        return embeddingStore;
-    }
-
-    /**
-     * Sets the EmbedddingStore to use to communicate with the database.
-     */
-    public void setEmbeddingStore(EmbeddingStore embdeddingStore) {
-        this.embeddingStore = embeddingStore;
     }
 
     @Override

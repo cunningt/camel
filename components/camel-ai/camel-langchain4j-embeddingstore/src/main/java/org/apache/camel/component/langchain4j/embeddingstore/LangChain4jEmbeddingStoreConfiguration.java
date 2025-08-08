@@ -16,6 +16,8 @@
  */
 package org.apache.camel.component.langchain4j.embeddingstore;
 
+import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.store.embedding.EmbeddingStore;
 import org.apache.camel.RuntimeCamelException;
 import org.apache.camel.spi.Configurer;
 import org.apache.camel.spi.Metadata;
@@ -26,145 +28,19 @@ import org.apache.camel.spi.UriParams;
 @UriParams
 public class LangChain4jEmbeddingStoreConfiguration implements Cloneable {
 
-    @Metadata(secret = true)
+    @Metadata(required = true, autowired = true)
     @UriParam
-    private String token;
+    private EmbeddingStore<TextSegment> embeddingStore;
 
-    @UriParam(label = "producer")
-    private String indexName;
-
-    @UriParam(label = "producer")
-    private String collectionSimilarityMetric;
-
-    @UriParam(label = "producer", defaultValue = "1536")
-    private Integer collectionDimension;
-
-    @UriParam(label = "producer")
-    private String cloud;
-
-    @UriParam(label = "producer")
-    private String cloudRegion;
-
-    @UriParam(label = "producer")
-    private String proxyHost;
-
-    @UriParam(label = "producer")
-    private Integer proxyPort;
-
-    @UriParam(defaultValue = "true", label = "producer")
-    private boolean tls;
-
-    @UriParam(label = "producer")
-    private String host;
-
-    public String getIndexName() {
-        return indexName;
+    public EmbeddingStore<TextSegment> getEmbeddingStore() {
+        return embeddingStore;
     }
 
     /**
-     * Sets the index name to use
+     * Sets the embedding store to use
      */
-    public void setIndexName(String indexName) {
-        this.indexName = indexName;
-    }
-
-    public String getCollectionSimilarityMetric() {
-        return collectionSimilarityMetric;
-    }
-
-    /**
-     * Sets the Collection Similarity Metric to use (cosine/euclidean/dotproduct)
-     */
-    public void setCollectionSimilarityMetric(String collectionSimilarityMetric) {
-        this.collectionSimilarityMetric = collectionSimilarityMetric;
-    }
-
-    public Integer getCollectionDimension() {
-        return collectionDimension;
-    }
-
-    /**
-     * Sets the Collection Dimension to use (1-1536)
-     */
-    public void setCollectionDimension(Integer collectionDimension) {
-        this.collectionDimension = collectionDimension;
-    }
-
-    public String getCloud() {
-        return cloud;
-    }
-
-    /**
-     * Sets the cloud type to use (aws/gcp/azure)
-     */
-    public void setCloud(String cloud) {
-        this.cloud = cloud;
-    }
-
-    public String getCloudRegion() {
-        return cloudRegion;
-    }
-
-    /**
-     * Sets the cloud region
-     */
-    public void setCloudRegion(String cloudRegion) {
-        this.cloudRegion = cloudRegion;
-    }
-
-    public String getProxyHost() {
-        return proxyHost;
-    }
-
-    /**
-     * Set the proxy host
-     */
-    public void setProxyHost(String proxyHost) {
-        this.proxyHost = proxyHost;
-    }
-
-    public Integer getProxyPort() {
-        return proxyPort;
-    }
-
-    /**
-     * Set the proxy port
-     */
-    public void setProxyPort(Integer proxyPort) {
-        this.proxyPort = proxyPort;
-    }
-
-    public boolean isTls() {
-        return tls;
-    }
-
-    /**
-     * Whether the client uses Transport Layer Security (TLS) to secure communications
-     */
-    public void setTls(boolean tls) {
-        this.tls = tls;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    /**
-     * Sets a custom host URL to connect to
-     */
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    /**
-     * Sets the API key to use for authentication
-     */
-    public void setToken(String token) {
-        this.token = token;
+    public void setEmbeddingStore(EmbeddingStore<TextSegment> embeddingStore) {
+        this.embeddingStore = embeddingStore;
     }
 
     // ************************

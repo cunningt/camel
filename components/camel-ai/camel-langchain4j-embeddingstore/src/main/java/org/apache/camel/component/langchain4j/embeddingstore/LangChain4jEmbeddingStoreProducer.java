@@ -16,7 +16,15 @@
  */
 package org.apache.camel.component.langchain4j.embeddingstore;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
+
+import dev.langchain4j.data.embedding.Embedding;
+import dev.langchain4j.store.embedding.filter.Filter;
+import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.store.embedding.EmbeddingMatch;
+import dev.langchain4j.store.embedding.EmbeddingSearchRequest;
+import dev.langchain4j.store.embedding.EmbeddingSearchRequest.EmbeddingSearchRequestBuilder;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
@@ -80,14 +88,52 @@ public class LangChain4jEmbeddingStoreProducer extends DefaultProducer {
 
     private void add(Exchange exchange) throws Exception {
         final Message in = exchange.getMessage();
+        Embedding embedding = in.getMandatoryBody(Embedding.class);
+
+        String id = getEndpoint().getConfiguration().getEmbeddingStore().add(embedding);
+        Message out = exchange.getMessage();
+        out.setBody(id);
     }
 
     private void remove(Exchange exchange) throws Exception {
         final Message in = exchange.getMessage();
+        String id = in.getMandatoryBody(String.class);
+
+        getEndpoint().getConfiguration().getEmbeddingStore().remove(id);
+
+        Message out = exchange.getMessage();
+        out.setBody(null);
+
     }
 
     private void search(Exchange exchange) throws Exception {
         final Message in = exchange.getMessage();
+        Embedding embedding = in.getMandatoryBody(Embedding.class);
+
+        int maxResults = Integer.parseInt(LangChain4jEmbeddingStore.DEFAULT_MAX_RESULTS);
+        if (in.getHeader(LangChain4jEmbeddingStore.Headers.MAX_RESULTS, Integer.class) != null) {
+            maxResults = in.getHeader(LangChain4jEmbeddingStore.Headers.MAX_RESULTS, Integer.class);
+        }
+
+        EmbeddingSearchRequestBuilder esrb = EmbeddingSearchRequest.builder()
+                .queryEmbedding(embedding)
+                .maxResults(maxResults);
+        
+        if (in.getHeader(LangChain4jEmbeddingStore.Headers.MAX_RESULTS, Integer.class) != null) {
+            Double minScore = in.getHeader(LangChain4jEmbeddingStore.Headers.MAX_RESULTS, Double.class);
+            esrb = esrb.minScore(minScore);
+        }    
+
+        if (in.getHeader(LangChain4jEmbeddingStore.Headers.MAX_RESULTS, Filter.class) != null) {
+            Filter filter = in.getHeader(LangChain4jEmbeddingStore.Headers.FILTER, Filter.class);
+            esrb = esrb.filter(filter);
+        }
+        EmbeddingSearchRequest embeddingSearchRequest = esrb.build();
+
+        List<EmbeddingMatch<TextSegment>> result
+                = getEndpoint().getConfiguration().getEmbeddingStore().search(embeddingSearchRequest).matches();
+        Message out = exchange.getMessage();
+        out.setBody(result);
     }
 
     // ***************************************

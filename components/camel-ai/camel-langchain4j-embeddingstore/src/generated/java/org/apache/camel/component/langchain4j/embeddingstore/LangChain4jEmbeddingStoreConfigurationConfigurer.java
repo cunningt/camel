@@ -23,22 +23,8 @@ public class LangChain4jEmbeddingStoreConfigurationConfigurer extends org.apache
     public boolean configure(CamelContext camelContext, Object obj, String name, Object value, boolean ignoreCase) {
         org.apache.camel.component.langchain4j.embeddingstore.LangChain4jEmbeddingStoreConfiguration target = (org.apache.camel.component.langchain4j.embeddingstore.LangChain4jEmbeddingStoreConfiguration) obj;
         switch (ignoreCase ? name.toLowerCase() : name) {
-        case "cloud": target.setCloud(property(camelContext, java.lang.String.class, value)); return true;
-        case "cloudregion":
-        case "cloudRegion": target.setCloudRegion(property(camelContext, java.lang.String.class, value)); return true;
-        case "collectiondimension":
-        case "collectionDimension": target.setCollectionDimension(property(camelContext, java.lang.Integer.class, value)); return true;
-        case "collectionsimilaritymetric":
-        case "collectionSimilarityMetric": target.setCollectionSimilarityMetric(property(camelContext, java.lang.String.class, value)); return true;
-        case "host": target.setHost(property(camelContext, java.lang.String.class, value)); return true;
-        case "indexname":
-        case "indexName": target.setIndexName(property(camelContext, java.lang.String.class, value)); return true;
-        case "proxyhost":
-        case "proxyHost": target.setProxyHost(property(camelContext, java.lang.String.class, value)); return true;
-        case "proxyport":
-        case "proxyPort": target.setProxyPort(property(camelContext, java.lang.Integer.class, value)); return true;
-        case "tls": target.setTls(property(camelContext, boolean.class, value)); return true;
-        case "token": target.setToken(property(camelContext, java.lang.String.class, value)); return true;
+        case "embeddingstore":
+        case "embeddingStore": target.setEmbeddingStore(property(camelContext, dev.langchain4j.store.embedding.EmbeddingStore.class, value)); return true;
         default: return false;
         }
     }
@@ -46,22 +32,8 @@ public class LangChain4jEmbeddingStoreConfigurationConfigurer extends org.apache
     @Override
     public Class<?> getOptionType(String name, boolean ignoreCase) {
         switch (ignoreCase ? name.toLowerCase() : name) {
-        case "cloud": return java.lang.String.class;
-        case "cloudregion":
-        case "cloudRegion": return java.lang.String.class;
-        case "collectiondimension":
-        case "collectionDimension": return java.lang.Integer.class;
-        case "collectionsimilaritymetric":
-        case "collectionSimilarityMetric": return java.lang.String.class;
-        case "host": return java.lang.String.class;
-        case "indexname":
-        case "indexName": return java.lang.String.class;
-        case "proxyhost":
-        case "proxyHost": return java.lang.String.class;
-        case "proxyport":
-        case "proxyPort": return java.lang.Integer.class;
-        case "tls": return boolean.class;
-        case "token": return java.lang.String.class;
+        case "embeddingstore":
+        case "embeddingStore": return dev.langchain4j.store.embedding.EmbeddingStore.class;
         default: return null;
         }
     }
@@ -70,22 +42,17 @@ public class LangChain4jEmbeddingStoreConfigurationConfigurer extends org.apache
     public Object getOptionValue(Object obj, String name, boolean ignoreCase) {
         org.apache.camel.component.langchain4j.embeddingstore.LangChain4jEmbeddingStoreConfiguration target = (org.apache.camel.component.langchain4j.embeddingstore.LangChain4jEmbeddingStoreConfiguration) obj;
         switch (ignoreCase ? name.toLowerCase() : name) {
-        case "cloud": return target.getCloud();
-        case "cloudregion":
-        case "cloudRegion": return target.getCloudRegion();
-        case "collectiondimension":
-        case "collectionDimension": return target.getCollectionDimension();
-        case "collectionsimilaritymetric":
-        case "collectionSimilarityMetric": return target.getCollectionSimilarityMetric();
-        case "host": return target.getHost();
-        case "indexname":
-        case "indexName": return target.getIndexName();
-        case "proxyhost":
-        case "proxyHost": return target.getProxyHost();
-        case "proxyport":
-        case "proxyPort": return target.getProxyPort();
-        case "tls": return target.isTls();
-        case "token": return target.getToken();
+        case "embeddingstore":
+        case "embeddingStore": return target.getEmbeddingStore();
+        default: return null;
+        }
+    }
+
+    @Override
+    public Object getCollectionValueType(Object target, String name, boolean ignoreCase) {
+        switch (ignoreCase ? name.toLowerCase() : name) {
+        case "embeddingstore":
+        case "embeddingStore": return dev.langchain4j.data.segment.TextSegment.class;
         default: return null;
         }
     }
