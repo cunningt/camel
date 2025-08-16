@@ -23,8 +23,9 @@ public class LangChain4jEmbeddingStoreEndpointUriFactory extends org.apache.came
     private static final Set<String> SECRET_PROPERTY_NAMES;
     private static final Set<String> MULTI_VALUE_PREFIXES;
     static {
-        Set<String> props = new HashSet<>(3);
+        Set<String> props = new HashSet<>(4);
         props.add("embeddingStore");
+        props.add("embeddingStoreFactory");
         props.add("embeddingStoreId");
         props.add("lazyStartProducer");
         PROPERTY_NAMES = Collections.unmodifiableSet(props);

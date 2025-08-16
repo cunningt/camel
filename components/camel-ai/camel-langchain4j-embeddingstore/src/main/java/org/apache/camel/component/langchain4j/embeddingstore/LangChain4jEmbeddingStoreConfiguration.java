@@ -28,9 +28,13 @@ import org.apache.camel.spi.UriParams;
 @UriParams
 public class LangChain4jEmbeddingStoreConfiguration implements Cloneable {
 
-    @Metadata(required = true, autowired = true)
+    @Metadata(autowired = true)
     @UriParam
     private EmbeddingStore<TextSegment> embeddingStore;
+
+    @UriParam(description = "The embedding store factory to use for creating embedding stores if no embeddingstore is provided")
+    @Metadata(autowired = true)
+    private EmbeddingStoreFactory embeddingStoreFactory;
 
     public EmbeddingStore<TextSegment> getEmbeddingStore() {
         return embeddingStore;
@@ -41,6 +45,19 @@ public class LangChain4jEmbeddingStoreConfiguration implements Cloneable {
      */
     public void setEmbeddingStore(EmbeddingStore<TextSegment> embeddingStore) {
         this.embeddingStore = embeddingStore;
+    }
+
+    /**
+     * An agent factory creating the agents
+     *
+     * @return the instance of the agent factory in use
+     */
+    public EmbeddingStoreFactory getEmbeddingStoreFactory() {
+        return embeddingStoreFactory;
+    }
+
+    public void setEmbeddingStoreFactory(EmbeddingStoreFactory embeddingStoreFactory) {
+        this.embeddingStoreFactory = embeddingStoreFactory;
     }
 
     // ************************

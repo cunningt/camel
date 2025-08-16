@@ -35,6 +35,8 @@ public class LangChain4jEmbeddingStoreComponentConfigurer extends PropertyConfig
         case "configuration": target.setConfiguration(property(camelContext, org.apache.camel.component.langchain4j.embeddingstore.LangChain4jEmbeddingStoreConfiguration.class, value)); return true;
         case "embeddingstore":
         case "embeddingStore": getOrCreateConfiguration(target).setEmbeddingStore(property(camelContext, dev.langchain4j.store.embedding.EmbeddingStore.class, value)); return true;
+        case "embeddingstorefactory":
+        case "embeddingStoreFactory": getOrCreateConfiguration(target).setEmbeddingStoreFactory(property(camelContext, org.apache.camel.component.langchain4j.embeddingstore.EmbeddingStoreFactory.class, value)); return true;
         case "lazystartproducer":
         case "lazyStartProducer": target.setLazyStartProducer(property(camelContext, boolean.class, value)); return true;
         default: return false;
@@ -43,7 +45,7 @@ public class LangChain4jEmbeddingStoreComponentConfigurer extends PropertyConfig
 
     @Override
     public String[] getAutowiredNames() {
-        return new String[]{"embeddingStore"};
+        return new String[]{"embeddingStore", "embeddingStoreFactory"};
     }
 
     @Override
@@ -54,6 +56,8 @@ public class LangChain4jEmbeddingStoreComponentConfigurer extends PropertyConfig
         case "configuration": return org.apache.camel.component.langchain4j.embeddingstore.LangChain4jEmbeddingStoreConfiguration.class;
         case "embeddingstore":
         case "embeddingStore": return dev.langchain4j.store.embedding.EmbeddingStore.class;
+        case "embeddingstorefactory":
+        case "embeddingStoreFactory": return org.apache.camel.component.langchain4j.embeddingstore.EmbeddingStoreFactory.class;
         case "lazystartproducer":
         case "lazyStartProducer": return boolean.class;
         default: return null;
@@ -69,6 +73,8 @@ public class LangChain4jEmbeddingStoreComponentConfigurer extends PropertyConfig
         case "configuration": return target.getConfiguration();
         case "embeddingstore":
         case "embeddingStore": return getOrCreateConfiguration(target).getEmbeddingStore();
+        case "embeddingstorefactory":
+        case "embeddingStoreFactory": return getOrCreateConfiguration(target).getEmbeddingStoreFactory();
         case "lazystartproducer":
         case "lazyStartProducer": return target.isLazyStartProducer();
         default: return null;

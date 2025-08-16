@@ -20,12 +20,12 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 import dev.langchain4j.data.embedding.Embedding;
-import dev.langchain4j.store.embedding.filter.Filter;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.store.embedding.EmbeddingMatch;
 import dev.langchain4j.store.embedding.EmbeddingSearchRequest;
 import dev.langchain4j.store.embedding.EmbeddingSearchRequest.EmbeddingSearchRequestBuilder;
-
+import dev.langchain4j.store.embedding.EmbeddingStore;
+import dev.langchain4j.store.embedding.filter.Filter;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
@@ -34,6 +34,7 @@ import org.apache.camel.support.DefaultProducer;
 
 public class LangChain4jEmbeddingStoreProducer extends DefaultProducer {
     private ExecutorService executor;
+    private EmbeddingStoreFactory embeddingStoreFactory;
 
     public LangChain4jEmbeddingStoreProducer(LangChain4jEmbeddingStoreEndpoint endpoint) {
         super(endpoint);
@@ -48,11 +49,23 @@ public class LangChain4jEmbeddingStoreProducer extends DefaultProducer {
     public void doStart() throws Exception {
         super.doStart();
 
+        embeddingStoreFactory = getEndpoint().getConfiguration().getEmbeddingStoreFactory();
+        if (embeddingStoreFactory != null) {
+            embeddingStoreFactory.setCamelContext(getEndpoint().getCamelContext());
+        }
     }
 
     @Override
-    public void process(Exchange exchange) {
+    public void process(Exchange exchange) throws Exception {
         final Message in = exchange.getMessage();
+
+        EmbeddingStore es;
+        if (embeddingStoreFactory != null) {
+            es = embeddingStoreFactory.createEmbeddingStore();
+        } else {
+            es = getEndpoint().getConfiguration().getEmbeddingStore();
+        }
+
         final LangChain4jEmbeddingStoreAction action
                 = in.getHeader(LangChain4jEmbeddingStore.Headers.ACTION, LangChain4jEmbeddingStoreAction.class);
 
@@ -118,11 +131,11 @@ public class LangChain4jEmbeddingStoreProducer extends DefaultProducer {
         EmbeddingSearchRequestBuilder esrb = EmbeddingSearchRequest.builder()
                 .queryEmbedding(embedding)
                 .maxResults(maxResults);
-        
+
         if (in.getHeader(LangChain4jEmbeddingStore.Headers.MAX_RESULTS, Integer.class) != null) {
             Double minScore = in.getHeader(LangChain4jEmbeddingStore.Headers.MAX_RESULTS, Double.class);
             esrb = esrb.minScore(minScore);
-        }    
+        }
 
         if (in.getHeader(LangChain4jEmbeddingStore.Headers.MAX_RESULTS, Filter.class) != null) {
             Filter filter = in.getHeader(LangChain4jEmbeddingStore.Headers.FILTER, Filter.class);

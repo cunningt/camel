@@ -25,6 +25,8 @@ public class LangChain4jEmbeddingStoreConfigurationConfigurer extends org.apache
         switch (ignoreCase ? name.toLowerCase() : name) {
         case "embeddingstore":
         case "embeddingStore": target.setEmbeddingStore(property(camelContext, dev.langchain4j.store.embedding.EmbeddingStore.class, value)); return true;
+        case "embeddingstorefactory":
+        case "embeddingStoreFactory": target.setEmbeddingStoreFactory(property(camelContext, org.apache.camel.component.langchain4j.embeddingstore.EmbeddingStoreFactory.class, value)); return true;
         default: return false;
         }
     }
@@ -34,6 +36,8 @@ public class LangChain4jEmbeddingStoreConfigurationConfigurer extends org.apache
         switch (ignoreCase ? name.toLowerCase() : name) {
         case "embeddingstore":
         case "embeddingStore": return dev.langchain4j.store.embedding.EmbeddingStore.class;
+        case "embeddingstorefactory":
+        case "embeddingStoreFactory": return org.apache.camel.component.langchain4j.embeddingstore.EmbeddingStoreFactory.class;
         default: return null;
         }
     }
@@ -44,6 +48,8 @@ public class LangChain4jEmbeddingStoreConfigurationConfigurer extends org.apache
         switch (ignoreCase ? name.toLowerCase() : name) {
         case "embeddingstore":
         case "embeddingStore": return target.getEmbeddingStore();
+        case "embeddingstorefactory":
+        case "embeddingStoreFactory": return target.getEmbeddingStoreFactory();
         default: return null;
         }
     }
