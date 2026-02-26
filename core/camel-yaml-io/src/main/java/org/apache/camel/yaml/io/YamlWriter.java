@@ -195,6 +195,14 @@ public class YamlWriter extends ServiceSupport implements CamelContextAware {
             }
             // is this input/output on the parent
             EipModel parent = models.isEmpty() ? null : models.peek();
+            if (parent != null && parent.isAbstractModel()) {
+                // transacted/policy is special as they are abstract so we should go one level back
+                int pos = models.size() - 1;
+                var it = models.iterator();
+                for (int i = 0; i <= pos; i++) {
+                    parent = it.next();
+                }
+            }
             if (parent != null) {
                 if ("from".equals(name) && parent.isInput()) {
                     // only set input once
@@ -226,7 +234,12 @@ public class YamlWriter extends ServiceSupport implements CamelContextAware {
                         list = new ArrayList<>();
                         parent.getMetadata().put("_output", list);
                     }
-                    list.add(last);
+                    // abstracts are special and should be added in the top
+                    if (last.isAbstractModel()) {
+                        list.add(0, last);
+                    } else {
+                        list.add(last);
+                    }
                 } else if ("marshal".equals(parent.getName()) || "unmarshal".equals(parent.getName())) {
                     parent.getMetadata().put("_dataFormatType", last);
                 }

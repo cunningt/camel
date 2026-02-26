@@ -40,6 +40,7 @@ import org.apache.camel.model.SetVariableDefinition;
 import org.apache.camel.model.SetVariablesDefinition;
 import org.apache.camel.model.SplitDefinition;
 import org.apache.camel.model.ToDefinition;
+import org.apache.camel.model.TransactedDefinition;
 import org.apache.camel.model.dataformat.CsvDataFormat;
 import org.apache.camel.model.language.ConstantExpression;
 import org.apache.camel.model.language.HeaderExpression;
@@ -413,6 +414,25 @@ public class ModelWriterTest {
 
         String out = sw.toString();
         String expected = stripLineComments(Paths.get("src/test/resources/route15.yaml"), "#", true);
+        Assertions.assertEquals(expected, out);
+    }
+
+    @Test
+    public void testTransacted() throws Exception {
+        StringWriter sw = new StringWriter();
+        ModelWriter writer = new ModelWriter(sw);
+
+        RouteDefinition route = new RouteDefinition();
+        route.setId("myRout16");
+        route.setInput(new FromDefinition("jms:cheese"));
+        TransactedDefinition td = new TransactedDefinition();
+        route.addOutput(td);
+        td.addOutput(new ToDefinition("bean:foo"));
+
+        writer.writeRouteDefinition(route);
+
+        String out = sw.toString();
+        String expected = stripLineComments(Paths.get("src/test/resources/route16.yaml"), "#", true);
         Assertions.assertEquals(expected, out);
     }
 
