@@ -27,7 +27,8 @@ import jakarta.xml.bind.annotation.XmlType;
 public enum ProtobufLibrary {
 
     GoogleProtobuf("protobuf"),
-    Jackson("protobufJackson");
+    Jackson("protobufJackson"),
+    Jackson3("protobufJackson3");
 
     private final String dataFormatName;
 

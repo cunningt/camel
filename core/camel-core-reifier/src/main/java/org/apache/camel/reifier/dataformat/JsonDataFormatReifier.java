@@ -32,7 +32,7 @@ public class JsonDataFormatReifier extends DataFormatReifier<JsonDataFormat> {
     @Override
     protected void prepareDataFormatConfig(Map<String, Object> properties) {
         properties.put("objectMapper", asRef(definition.getObjectMapper()));
-        if (definition.getLibrary() == JsonLibrary.Jackson) {
+        if (definition.getLibrary() == JsonLibrary.Jackson || definition.getLibrary() == JsonLibrary.Jackson3) {
             if (definition.getUseDefaultObjectMapper() == null) {
                 // default true
                 properties.put("useDefaultObjectMapper", "true");
@@ -56,7 +56,7 @@ public class JsonDataFormatReifier extends DataFormatReifier<JsonDataFormat> {
         properties.put("enableFeatures", definition.getEnableFeatures());
         properties.put("disableFeatures", definition.getDisableFeatures());
         properties.put("allowUnmarshallType", definition.getAllowUnmarshallType());
-        if (definition.getLibrary() == JsonLibrary.Jackson) {
+        if (definition.getLibrary() == JsonLibrary.Jackson || definition.getLibrary() == JsonLibrary.Jackson3) {
             properties.put("schemaResolver", asRef(definition.getSchemaResolver()));
             properties.put("autoDiscoverSchemaResolver", definition.getAutoDiscoverSchemaResolver());
             properties.put("namingStrategy", definition.getNamingStrategy());

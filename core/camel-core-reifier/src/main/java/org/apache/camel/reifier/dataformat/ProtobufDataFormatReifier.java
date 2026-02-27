@@ -43,7 +43,7 @@ public class ProtobufDataFormatReifier extends DataFormatReifier<ProtobufDataFor
             }
             properties.put("contentTypeFormat", definition.getContentTypeFormat());
             properties.put("defaultInstance", definition.getDefaultInstance());
-        } else if (definition.getLibrary() == ProtobufLibrary.Jackson) {
+        } else if (definition.getLibrary() == ProtobufLibrary.Jackson || definition.getLibrary() == ProtobufLibrary.Jackson3) {
             properties.put("objectMapper", asRef(definition.getObjectMapper()));
             if (definition.getUseDefaultObjectMapper() == null) {
                 // default true

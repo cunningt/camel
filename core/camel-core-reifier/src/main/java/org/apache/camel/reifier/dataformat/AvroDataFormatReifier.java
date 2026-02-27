@@ -42,7 +42,7 @@ public class AvroDataFormatReifier extends DataFormatReifier<AvroDataFormat> {
                 properties.put("instanceClassName", definition.getInstanceClassName());
             }
             properties.put("schema", definition.getSchema());
-        } else if (definition.getLibrary() == AvroLibrary.Jackson) {
+        } else if (definition.getLibrary() == AvroLibrary.Jackson || definition.getLibrary() == AvroLibrary.Jackson3) {
             properties.put("objectMapper", asRef(definition.getObjectMapper()));
             if (definition.getUseDefaultObjectMapper() == null) {
                 // default true

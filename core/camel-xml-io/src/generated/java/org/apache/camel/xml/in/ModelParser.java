@@ -1987,6 +1987,28 @@ public class ModelParser extends BaseParser {
                 default: yield identifiedTypeAttributeHandler().accept(def, key, val);
             }, noElementHandler(), noValueHandler());
     }
+    protected JacksonXML3DataFormat doParseJacksonXML3DataFormat() throws IOException, XmlPullParserException {
+        return doParse(new JacksonXML3DataFormat(), (def, key, val) -> switch (key) {
+                case "allowJmsType": def.setAllowJmsType(val); yield true;
+                case "allowUnmarshallType": def.setAllowUnmarshallType(val); yield true;
+                case "collectionType": def.setCollectionTypeName(val); yield true;
+                case "contentTypeHeader": def.setContentTypeHeader(val); yield true;
+                case "disableFeatures": def.setDisableFeatures(val); yield true;
+                case "enableFeatures": def.setEnableFeatures(val); yield true;
+                case "enableJaxbAnnotationModule": def.setEnableJaxbAnnotationModule(val); yield true;
+                case "include": def.setInclude(val); yield true;
+                case "jsonView": def.setJsonViewTypeName(val); yield true;
+                case "maxStringLength": def.setMaxStringLength(val); yield true;
+                case "moduleClassNames": def.setModuleClassNames(val); yield true;
+                case "moduleRefs": def.setModuleRefs(val); yield true;
+                case "prettyPrint": def.setPrettyPrint(val); yield true;
+                case "timezone": def.setTimezone(val); yield true;
+                case "unmarshalType": def.setUnmarshalTypeName(val); yield true;
+                case "useList": def.setUseList(val); yield true;
+                case "xmlMapper": def.setXmlMapper(val); yield true;
+                default: yield identifiedTypeAttributeHandler().accept(def, key, val);
+            }, noElementHandler(), noValueHandler());
+    }
     protected JacksonXMLDataFormat doParseJacksonXMLDataFormat() throws IOException, XmlPullParserException {
         return doParse(new JacksonXMLDataFormat(), (def, key, val) -> switch (key) {
                 case "allowJmsType": def.setAllowJmsType(val); yield true;
@@ -2999,6 +3021,7 @@ public class ModelParser extends BaseParser {
             case "hl7": return doParseHL7DataFormat();
             case "ical": return doParseIcalDataFormat();
             case "iso8583": return doParseIso8583DataFormat();
+            case "jacksonXml3": return doParseJacksonXML3DataFormat();
             case "jacksonXml": return doParseJacksonXMLDataFormat();
             case "jaxb": return doParseJaxbDataFormat();
             case "jsonApi": return doParseJsonApiDataFormat();

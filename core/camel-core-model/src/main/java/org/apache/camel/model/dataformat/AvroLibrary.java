@@ -27,7 +27,8 @@ import jakarta.xml.bind.annotation.XmlType;
 public enum AvroLibrary {
 
     ApacheAvro("avro"),
-    Jackson("avroJackson");
+    Jackson("avroJackson"),
+    Jackson3("avroJackson3");
 
     private final String dataFormatName;
 

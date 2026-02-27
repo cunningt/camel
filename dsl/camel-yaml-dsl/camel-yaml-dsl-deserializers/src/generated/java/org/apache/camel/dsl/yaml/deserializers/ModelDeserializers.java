@@ -159,6 +159,7 @@ import org.apache.camel.model.dataformat.GzipDeflaterDataFormat;
 import org.apache.camel.model.dataformat.HL7DataFormat;
 import org.apache.camel.model.dataformat.IcalDataFormat;
 import org.apache.camel.model.dataformat.Iso8583DataFormat;
+import org.apache.camel.model.dataformat.JacksonXML3DataFormat;
 import org.apache.camel.model.dataformat.JacksonXMLDataFormat;
 import org.apache.camel.model.dataformat.JaxbDataFormat;
 import org.apache.camel.model.dataformat.JsonApiDataFormat;
@@ -657,7 +658,7 @@ public final class ModelDeserializers extends YamlDeserializerSupport {
                     @YamlProperty(name = "include", type = "string", description = "If you want to marshal a pojo to JSON, and the pojo has some fields with null values. And you want to skip these null values, you can set this option to NON_NULL", displayName = "Include"),
                     @YamlProperty(name = "instanceClassName", type = "string", description = "Class name to use for marshal and unmarshalling", displayName = "Instance Class Name"),
                     @YamlProperty(name = "jsonView", type = "string", description = "When marshalling a POJO to JSON you might want to exclude certain fields from the JSON output. With Jackson you can use JSON views to accomplish this. This option is to refer to the class which has JsonView annotations", displayName = "Json View"),
-                    @YamlProperty(name = "library", type = "enum:ApacheAvro,Jackson", defaultValue = "avroJackson", description = "Which Avro library to use.", displayName = "Library"),
+                    @YamlProperty(name = "library", type = "enum:ApacheAvro,Jackson,Jackson3", defaultValue = "avroJackson", description = "Which Avro library to use.", displayName = "Library"),
                     @YamlProperty(name = "moduleClassNames", type = "string", description = "To use custom Jackson modules com.fasterxml.jackson.databind.Module specified as a String with FQN class names. Multiple classes can be separated by comma.", displayName = "Module Class Names"),
                     @YamlProperty(name = "moduleRefs", type = "string", description = "To use custom Jackson modules referred from the Camel registry. Multiple modules can be separated by comma.", displayName = "Module Refs"),
                     @YamlProperty(name = "objectMapper", type = "string", description = "Lookup and use the existing ObjectMapper with the given id when using Jackson.", displayName = "Object Mapper"),
@@ -3924,6 +3925,7 @@ public final class ModelDeserializers extends YamlDeserializerSupport {
                     @YamlProperty(name = "ical", type = "object:org.apache.camel.model.dataformat.IcalDataFormat"),
                     @YamlProperty(name = "iso8583", type = "object:org.apache.camel.model.dataformat.Iso8583DataFormat"),
                     @YamlProperty(name = "jacksonXml", type = "object:org.apache.camel.model.dataformat.JacksonXMLDataFormat"),
+                    @YamlProperty(name = "jacksonXml3", type = "object:org.apache.camel.model.dataformat.JacksonXML3DataFormat"),
                     @YamlProperty(name = "jaxb", type = "object:org.apache.camel.model.dataformat.JaxbDataFormat"),
                     @YamlProperty(name = "json", type = "object:org.apache.camel.model.dataformat.JsonDataFormat"),
                     @YamlProperty(name = "jsonApi", type = "object:org.apache.camel.model.dataformat.JsonApiDataFormat"),
@@ -4181,6 +4183,16 @@ public final class ModelDeserializers extends YamlDeserializerSupport {
                 }
                 case "jacksonXml": {
                     org.apache.camel.model.dataformat.JacksonXMLDataFormat val = asType(node, org.apache.camel.model.dataformat.JacksonXMLDataFormat.class);
+                    java.util.List<org.apache.camel.model.DataFormatDefinition> existing = target.getDataFormats();
+                    if (existing == null) {
+                        existing = new java.util.ArrayList<>();
+                    }
+                    existing.add(val);
+                    target.setDataFormats(existing);
+                    break;
+                }
+                case "jacksonXml3": {
+                    org.apache.camel.model.dataformat.JacksonXML3DataFormat val = asType(node, org.apache.camel.model.dataformat.JacksonXML3DataFormat.class);
                     java.util.List<org.apache.camel.model.DataFormatDefinition> existing = target.getDataFormats();
                     if (existing == null) {
                         existing = new java.util.ArrayList<>();
@@ -7839,6 +7851,147 @@ public final class ModelDeserializers extends YamlDeserializerSupport {
     }
 
     @YamlType(
+            nodes = "jacksonXml3",
+            types = org.apache.camel.model.dataformat.JacksonXML3DataFormat.class,
+            order = org.apache.camel.dsl.yaml.common.YamlDeserializerResolver.ORDER_LOWEST - 1,
+            displayName = "Jackson 3 XML",
+            description = "Unmarshal an XML payloads to POJOs and back using XMLMapper extension of Jackson 3.",
+            deprecated = false,
+            properties = {
+                    @YamlProperty(name = "allowJmsType", type = "boolean", defaultValue = "false", description = "Used for JMS users to allow the JMSType header from the JMS spec to specify a FQN classname to use to unmarshal to.", displayName = "Allow Jms Type"),
+                    @YamlProperty(name = "allowUnmarshallType", type = "boolean", defaultValue = "false", description = "If enabled then Jackson is allowed to attempt to use the CamelJacksonUnmarshalType header during the unmarshalling. This should only be enabled when desired to be used.", displayName = "Allow Unmarshall Type"),
+                    @YamlProperty(name = "collectionType", type = "string", description = "Refers to a custom collection type to lookup in the registry to use. This option should rarely be used, but allows to use different collection types than java.util.Collection based as default.", displayName = "Collection Type"),
+                    @YamlProperty(name = "contentTypeHeader", type = "boolean", defaultValue = "true", description = "Whether the data format should set the Content-Type header with the type from the data format. For example application/xml for data formats marshalling to XML, or application/json for data formats marshalling to JSON", displayName = "Content Type Header"),
+                    @YamlProperty(name = "disableFeatures", type = "string", description = "Set of features to disable on the Jackson com.fasterxml.jackson.databind.ObjectMapper. The features should be a name that matches a enum from com.fasterxml.jackson.databind.SerializationFeature, com.fasterxml.jackson.databind.DeserializationFeature, or com.fasterxml.jackson.databind.MapperFeature Multiple features can be separated by comma", displayName = "Disable Features"),
+                    @YamlProperty(name = "enableFeatures", type = "string", description = "Set of features to enable on the Jackson com.fasterxml.jackson.databind.ObjectMapper. The features should be a name that matches a enum from com.fasterxml.jackson.databind.SerializationFeature, com.fasterxml.jackson.databind.DeserializationFeature, or com.fasterxml.jackson.databind.MapperFeature Multiple features can be separated by comma", displayName = "Enable Features"),
+                    @YamlProperty(name = "enableJaxbAnnotationModule", type = "boolean", defaultValue = "false", description = "Whether to enable the JAXB annotations module when using jackson. When enabled then JAXB annotations can be used by Jackson.", displayName = "Enable Jaxb Annotation Module"),
+                    @YamlProperty(name = "id", type = "string", description = "The id of this node", displayName = "Id"),
+                    @YamlProperty(name = "include", type = "string", description = "If you want to marshal a pojo to JSON, and the pojo has some fields with null values. And you want to skip these null values, you can set this option to NON_NULL", displayName = "Include"),
+                    @YamlProperty(name = "jsonView", type = "string", description = "When marshalling a POJO to JSON you might want to exclude certain fields from the JSON output. With Jackson you can use JSON views to accomplish this. This option is to refer to the class which has JsonView annotations", displayName = "Json View"),
+                    @YamlProperty(name = "maxStringLength", type = "number", description = "Sets the maximum string length (in chars or bytes, depending on input context). The default is 20,000,000. This limit is not exact, the limit is applied when we increase internal buffer sizes and an exception will happen at sizes greater than this limit. Some text values that are a little bigger than the limit may be treated as valid but no text values with sizes less than or equal to this limit will be treated as invalid.", displayName = "Max String Length"),
+                    @YamlProperty(name = "moduleClassNames", type = "string", description = "To use custom Jackson modules com.fasterxml.jackson.databind.Module specified as a String with FQN class names. Multiple classes can be separated by comma.", displayName = "Module Class Names"),
+                    @YamlProperty(name = "moduleRefs", type = "string", description = "To use custom Jackson modules referred from the Camel registry. Multiple modules can be separated by comma.", displayName = "Module Refs"),
+                    @YamlProperty(name = "prettyPrint", type = "boolean", defaultValue = "false", description = "To enable pretty printing output nicely formatted. Is by default false.", displayName = "Pretty Print"),
+                    @YamlProperty(name = "timezone", type = "string", description = "If set then Jackson will use the Timezone when marshalling/unmarshalling.", displayName = "Timezone"),
+                    @YamlProperty(name = "unmarshalType", type = "string", description = "Class name of the java type to use when unmarshalling", displayName = "Unmarshal Type"),
+                    @YamlProperty(name = "useList", type = "boolean", defaultValue = "false", description = "To unmarshal to a List of Map or a List of Pojo.", displayName = "Use List"),
+                    @YamlProperty(name = "xmlMapper", type = "string", description = "Lookup and use the existing XmlMapper with the given id.", displayName = "Xml Mapper")
+            }
+    )
+    public static class JacksonXML3DataFormatDeserializer extends YamlDeserializerBase<JacksonXML3DataFormat> {
+        public JacksonXML3DataFormatDeserializer() {
+            super(JacksonXML3DataFormat.class);
+        }
+
+        @Override
+        protected JacksonXML3DataFormat newInstance() {
+            return new JacksonXML3DataFormat();
+        }
+
+        @Override
+        protected boolean setProperty(JacksonXML3DataFormat target, String propertyKey,
+                String propertyName, Node node) {
+            propertyKey = org.apache.camel.util.StringHelper.dashToCamelCase(propertyKey);
+            switch(propertyKey) {
+                case "allowJmsType": {
+                    String val = asText(node);
+                    target.setAllowJmsType(val);
+                    break;
+                }
+                case "allowUnmarshallType": {
+                    String val = asText(node);
+                    target.setAllowUnmarshallType(val);
+                    break;
+                }
+                case "collectionType": {
+                    String val = asText(node);
+                    target.setCollectionTypeName(val);
+                    break;
+                }
+                case "contentTypeHeader": {
+                    String val = asText(node);
+                    target.setContentTypeHeader(val);
+                    break;
+                }
+                case "disableFeatures": {
+                    String val = asText(node);
+                    target.setDisableFeatures(val);
+                    break;
+                }
+                case "enableFeatures": {
+                    String val = asText(node);
+                    target.setEnableFeatures(val);
+                    break;
+                }
+                case "enableJaxbAnnotationModule": {
+                    String val = asText(node);
+                    target.setEnableJaxbAnnotationModule(val);
+                    break;
+                }
+                case "id": {
+                    String val = asText(node);
+                    target.setId(val);
+                    break;
+                }
+                case "include": {
+                    String val = asText(node);
+                    target.setInclude(val);
+                    break;
+                }
+                case "jsonView": {
+                    String val = asText(node);
+                    target.setJsonViewTypeName(val);
+                    break;
+                }
+                case "maxStringLength": {
+                    String val = asText(node);
+                    target.setMaxStringLength(val);
+                    break;
+                }
+                case "moduleClassNames": {
+                    String val = asText(node);
+                    target.setModuleClassNames(val);
+                    break;
+                }
+                case "moduleRefs": {
+                    String val = asText(node);
+                    target.setModuleRefs(val);
+                    break;
+                }
+                case "prettyPrint": {
+                    String val = asText(node);
+                    target.setPrettyPrint(val);
+                    break;
+                }
+                case "timezone": {
+                    String val = asText(node);
+                    target.setTimezone(val);
+                    break;
+                }
+                case "unmarshalType": {
+                    String val = asText(node);
+                    target.setUnmarshalTypeName(val);
+                    break;
+                }
+                case "useList": {
+                    String val = asText(node);
+                    target.setUseList(val);
+                    break;
+                }
+                case "xmlMapper": {
+                    String val = asText(node);
+                    target.setXmlMapper(val);
+                    break;
+                }
+                default: {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    @YamlType(
             nodes = "jacksonXml",
             types = org.apache.camel.model.dataformat.JacksonXMLDataFormat.class,
             order = org.apache.camel.dsl.yaml.common.YamlDeserializerResolver.ORDER_LOWEST - 1,
@@ -8528,7 +8681,7 @@ public final class ModelDeserializers extends YamlDeserializerSupport {
                     @YamlProperty(name = "id", type = "string", description = "The id of this node", displayName = "Id"),
                     @YamlProperty(name = "include", type = "string", description = "If you want to marshal a pojo to JSON, and the pojo has some fields with null values. And you want to skip these null values, you can set this option to NON_NULL", displayName = "Include"),
                     @YamlProperty(name = "jsonView", type = "string", description = "When marshalling a POJO to JSON you might want to exclude certain fields from the JSON output. With Jackson you can use JSON views to accomplish this. This option is to refer to the class which has JsonView annotations", displayName = "Json View"),
-                    @YamlProperty(name = "library", type = "enum:Fastjson,Gson,Jackson,Jsonb", defaultValue = "Jackson", description = "Which json library to use.", displayName = "Library"),
+                    @YamlProperty(name = "library", type = "enum:Fastjson,Gson,Jackson,Jackson3,Jsonb", defaultValue = "Jackson", description = "Which json library to use.", displayName = "Library"),
                     @YamlProperty(name = "maxStringLength", type = "number", description = "Jackson. Sets the maximum string length (in chars or bytes, depending on input context). The default is 20,000,000. This limit is not exact, the limit is applied when we increase internal buffer sizes and an exception will happen at sizes greater than this limit. Some text values that are a little bigger than the limit may be treated as valid but no text values with sizes less than or equal to this limit will be treated as invalid.", displayName = "Max String Length"),
                     @YamlProperty(name = "moduleClassNames", type = "string", description = "To use custom Jackson modules com.fasterxml.jackson.databind.Module specified as a String with FQN class names. Multiple classes can be separated by comma.", displayName = "Module Class Names"),
                     @YamlProperty(name = "moduleRefs", type = "string", description = "To use custom Jackson modules referred from the Camel registry. Multiple modules can be separated by comma.", displayName = "Module Refs"),
@@ -13183,7 +13336,7 @@ public final class ModelDeserializers extends YamlDeserializerSupport {
                     @YamlProperty(name = "include", type = "string", description = "If you want to marshal a pojo to JSON, and the pojo has some fields with null values. And you want to skip these null values, you can set this option to NON_NULL", displayName = "Include"),
                     @YamlProperty(name = "instanceClass", type = "string", description = "Name of class to use when unmarshalling", displayName = "Instance Class"),
                     @YamlProperty(name = "jsonView", type = "string", description = "When marshalling a POJO to JSON you might want to exclude certain fields from the JSON output. With Jackson you can use JSON views to accomplish this. This option is to refer to the class which has JsonView annotations", displayName = "Json View"),
-                    @YamlProperty(name = "library", type = "enum:GoogleProtobuf,Jackson", defaultValue = "GoogleProtobuf", description = "Which Protobuf library to use.", displayName = "Library"),
+                    @YamlProperty(name = "library", type = "enum:GoogleProtobuf,Jackson,Jackson3", defaultValue = "GoogleProtobuf", description = "Which Protobuf library to use.", displayName = "Library"),
                     @YamlProperty(name = "moduleClassNames", type = "string", description = "To use custom Jackson modules com.fasterxml.jackson.databind.Module specified as a String with FQN class names. Multiple classes can be separated by comma.", displayName = "Module Class Names"),
                     @YamlProperty(name = "moduleRefs", type = "string", description = "To use custom Jackson modules referred from the Camel registry. Multiple modules can be separated by comma.", displayName = "Module Refs"),
                     @YamlProperty(name = "objectMapper", type = "string", description = "Lookup and use the existing ObjectMapper with the given id when using Jackson.", displayName = "Object Mapper"),

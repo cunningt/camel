@@ -10761,7 +10761,7 @@
               "title" : "Library",
               "description" : "Which Avro library to use.",
               "default" : "avroJackson",
-              "enum" : [ "ApacheAvro", "Jackson" ]
+              "enum" : [ "ApacheAvro", "Jackson", "Jackson3" ]
             },
             "moduleClassNames" : {
               "type" : "string",
@@ -11383,6 +11383,9 @@
           "jacksonXml" : {
             "$ref" : "#/items/definitions/org.apache.camel.model.dataformat.JacksonXMLDataFormat"
           },
+          "jacksonXml3" : {
+            "$ref" : "#/items/definitions/org.apache.camel.model.dataformat.JacksonXML3DataFormat"
+          },
           "jaxb" : {
             "$ref" : "#/items/definitions/org.apache.camel.model.dataformat.JaxbDataFormat"
           },
@@ -11949,6 +11952,110 @@
           }
         }
       },
+      "org.apache.camel.model.dataformat.JacksonXML3DataFormat" : {
+        "title" : "Jackson 3 XML",
+        "description" : "Unmarshal an XML payloads to POJOs and back using XMLMapper extension of Jackson 3.",
+        "type" : "object",
+        "additionalProperties" : false,
+        "properties" : {
+          "allowJmsType" : {
+            "type" : "boolean",
+            "title" : "Allow Jms Type",
+            "description" : "Used for JMS users to allow the JMSType header from the JMS spec to specify a FQN classname to use to unmarshal to.",
+            "default" : false
+          },
+          "allowUnmarshallType" : {
+            "type" : "boolean",
+            "title" : "Allow Unmarshall Type",
+            "description" : "If enabled then Jackson is allowed to attempt to use the CamelJacksonUnmarshalType header during the unmarshalling. This should only be enabled when desired to be used.",
+            "default" : false
+          },
+          "collectionType" : {
+            "type" : "string",
+            "title" : "Collection Type",
+            "description" : "Refers to a custom collection type to lookup in the registry to use. This option should rarely be used, but allows to use different collection types than java.util.Collection based as default."
+          },
+          "contentTypeHeader" : {
+            "type" : "boolean",
+            "title" : "Content Type Header",
+            "description" : "Whether the data format should set the Content-Type header with the type from the data format. For example application/xml for data formats marshalling to XML, or application/json for data formats marshalling to JSON",
+            "default" : true
+          },
+          "disableFeatures" : {
+            "type" : "string",
+            "title" : "Disable Features",
+            "description" : "Set of features to disable on the Jackson com.fasterxml.jackson.databind.ObjectMapper. The features should be a name that matches a enum from com.fasterxml.jackson.databind.SerializationFeature, com.fasterxml.jackson.databind.DeserializationFeature, or com.fasterxml.jackson.databind.MapperFeature Multiple features can be separated by comma"
+          },
+          "enableFeatures" : {
+            "type" : "string",
+            "title" : "Enable Features",
+            "description" : "Set of features to enable on the Jackson com.fasterxml.jackson.databind.ObjectMapper. The features should be a name that matches a enum from com.fasterxml.jackson.databind.SerializationFeature, com.fasterxml.jackson.databind.DeserializationFeature, or com.fasterxml.jackson.databind.MapperFeature Multiple features can be separated by comma"
+          },
+          "enableJaxbAnnotationModule" : {
+            "type" : "boolean",
+            "title" : "Enable Jaxb Annotation Module",
+            "description" : "Whether to enable the JAXB annotations module when using jackson. When enabled then JAXB annotations can be used by Jackson.",
+            "default" : false
+          },
+          "id" : {
+            "type" : "string",
+            "title" : "Id",
+            "description" : "The id of this node"
+          },
+          "include" : {
+            "type" : "string",
+            "title" : "Include",
+            "description" : "If you want to marshal a pojo to JSON, and the pojo has some fields with null values. And you want to skip these null values, you can set this option to NON_NULL"
+          },
+          "jsonView" : {
+            "type" : "string",
+            "title" : "Json View",
+            "description" : "When marshalling a POJO to JSON you might want to exclude certain fields from the JSON output. With Jackson you can use JSON views to accomplish this. This option is to refer to the class which has JsonView annotations"
+          },
+          "maxStringLength" : {
+            "type" : "number",
+            "title" : "Max String Length",
+            "description" : "Sets the maximum string length (in chars or bytes, depending on input context). The default is 20,000,000. This limit is not exact, the limit is applied when we increase internal buffer sizes and an exception will happen at sizes greater than this limit. Some text values that are a little bigger than the limit may be treated as valid but no text values with sizes less than or equal to this limit will be treated as invalid."
+          },
+          "moduleClassNames" : {
+            "type" : "string",
+            "title" : "Module Class Names",
+            "description" : "To use custom Jackson modules com.fasterxml.jackson.databind.Module specified as a String with FQN class names. Multiple classes can be separated by comma."
+          },
+          "moduleRefs" : {
+            "type" : "string",
+            "title" : "Module Refs",
+            "description" : "To use custom Jackson modules referred from the Camel registry. Multiple modules can be separated by comma."
+          },
+          "prettyPrint" : {
+            "type" : "boolean",
+            "title" : "Pretty Print",
+            "description" : "To enable pretty printing output nicely formatted. Is by default false.",
+            "default" : false
+          },
+          "timezone" : {
+            "type" : "string",
+            "title" : "Timezone",
+            "description" : "If set then Jackson will use the Timezone when marshalling/unmarshalling."
+          },
+          "unmarshalType" : {
+            "type" : "string",
+            "title" : "Unmarshal Type",
+            "description" : "Class name of the java type to use when unmarshalling"
+          },
+          "useList" : {
+            "type" : "boolean",
+            "title" : "Use List",
+            "description" : "To unmarshal to a List of Map or a List of Pojo.",
+            "default" : false
+          },
+          "xmlMapper" : {
+            "type" : "string",
+            "title" : "Xml Mapper",
+            "description" : "Lookup and use the existing XmlMapper with the given id."
+          }
+        }
+      },
       "org.apache.camel.model.dataformat.JacksonXMLDataFormat" : {
         "title" : "Jackson XML",
         "description" : "Unmarshal an XML payloads to POJOs and back using XMLMapper extension of Jackson.",
@@ -12282,7 +12389,7 @@
             "title" : "Library",
             "description" : "Which json library to use.",
             "default" : "Jackson",
-            "enum" : [ "Fastjson", "Gson", "Jackson", "Jsonb" ]
+            "enum" : [ "Fastjson", "Gson", "Jackson", "Jackson3", "Jsonb" ]
           },
           "maxStringLength" : {
             "type" : "number",
@@ -12717,7 +12824,7 @@
               "title" : "Library",
               "description" : "Which Protobuf library to use.",
               "default" : "GoogleProtobuf",
-              "enum" : [ "GoogleProtobuf", "Jackson" ]
+              "enum" : [ "GoogleProtobuf", "Jackson", "Jackson3" ]
             },
             "moduleClassNames" : {
               "type" : "string",
